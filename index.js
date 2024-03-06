@@ -1,8 +1,5 @@
 'use strict'
 
-const { promisify } = require('util')
-const sleep = promisify(setTimeout)
-
 closeWithGrace.closing = false
 
 function closeWithGrace (opts, fn) {
@@ -93,7 +90,7 @@ function closeWithGrace (opts, fn) {
       const res = await Promise.race([
         // We create the timer first as fn
         // might block the event loop
-        sleep(delay, sleeped),
+        new Promise((resolve) => setTimeout(resolve, delay, sleeped)),
         exec(out)
       ])
 
